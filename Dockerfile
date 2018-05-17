@@ -9,6 +9,7 @@ RUN apt-get update \
     git \
 #    libdbd-mysql-perl \
 #    libdbi-perl \
+    python-mysqldb \
     mysql-client-5.7 \
     mysql-server-5.7 \
 #    r-base-core \
