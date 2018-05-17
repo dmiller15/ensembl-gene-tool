@@ -42,4 +42,4 @@ RUN apt-get update \
 
 COPY db_query.py /
 
-RUN ["python","db_query.py"]
+RUN ["chmod 1777 /tmp", "&& sudo /usr/sbin/mysqld --defaults-file=/etc/mysql/my.cnf --user=mysql --daemonize", "python", "db_query.py"]
