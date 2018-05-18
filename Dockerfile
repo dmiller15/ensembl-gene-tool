@@ -4,6 +4,8 @@ ENV ensembl-gene-db 0.1
 
 ENV DEBIAN_FRONTEND noninteractive
 
+COPY db_query.py /
+
 RUN apt-get update \
     && apt-get install -y \
     git \
@@ -39,7 +41,3 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/lib/mysql/hg38/*.sql /var/lib/mysql/hg38/*.tsv /var/lib/mysql/mirbase/*.sql /var/lib/mysql/mirbase/*.tsv \
     && mysqladmin shutdown \
     && cd /
-
-COPY db_query.py /
-
-RUN ["chmod 1777 /tmp", "&& sudo /usr/sbin/mysqld --defaults-file=/etc/mysql/my.cnf --user=mysql --daemonize", "python", "db_query.py"]
