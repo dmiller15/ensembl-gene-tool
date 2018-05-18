@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import MySQLdb
+import sys
 
 db = MySQLdb.connect(host="localhost",    # your host, usually localhost
                      user="root",         # your username
@@ -10,11 +11,18 @@ db = MySQLdb.connect(host="localhost",    # your host, usually localhost
 #  you execute all the queries you need
 cur = db.cursor()
 
+for line in sys.stdin:
+    value = line.strip()
+    hugo = "select value from gene_attrib where (attrib_type_id = 4 and gene_id in (select gene_id from gene where stable_id = %(ensembl_id)s))"
+    cur.execute(hugo, {'ensembl_id':value})
+    for row in cur.fetchall():
+        print row[0]
+
 # Use all the SQL you like
-cur.execute("SELECT * FROM gene")
+#cur.execute("SELECT * FROM gene")
 
 # print all the first cell of all the rows
-for row in cur.fetchall():
-    print row[0]
+#for row in cur.fetchall():
+#    print row[0]
 
 db.close()
