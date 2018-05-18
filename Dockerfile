@@ -32,12 +32,18 @@ RUN apt-get update \
     && mysql -e "create database hg38" \
     && cd /var/lib/mysql/hg38/ \
     && wget ftp://ftp.ensembl.org/pub/release-92/mysql/homo_sapiens_core_92_38/gene.txt.gz \
+    && wget ftp://ftp.ensembl.org/pub/release-92/mysql/homo_sapiens_core_92_38/gene_attrib.txt.gz \
     && wget ftp://ftp.ensembl.org/pub/release-92/mysql/homo_sapiens_core_92_38/homo_sapiens_core_92_38.sql.gz \
     && gunzip gene.txt.gz \
+    && gunzip gene_attrib.txt.gz \
     && gunzip homo_sapiens_core_92_38.sql.gz \
     && mv gene.txt gene.tsv \
+    && mv gene_attrib.txt gene_attrib.tsv \
     && cat homo_sapiens_core_92_38.sql | mysql --user=root --database=hg38 \ 
     && mysqlimport --user root hg38 gene.tsv \
+    && mysqlimport --user root hg38 gene_attrib.tsv \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/lib/mysql/hg38/*.sql /var/lib/mysql/hg38/*.tsv /var/lib/mysql/mirbase/*.sql /var/lib/mysql/mirbase/*.tsv \
     && mysqladmin shutdown \
     && cd /
+
+CMD ["chmod 1777 tmp/","&& sudo /usr/sbin/mysqld --defaults-file=/etc/mysql/my.cnf --user=mysql --daemonize"]
