@@ -13,7 +13,7 @@ cur = db.cursor()
 
 for line in sys.stdin:
     value = line.strip()
-    hugo = "select value from gene_attrib where (attrib_type_id = 4 and gene_id in (select gene_id from gene where stable_id = %(ensembl_id)s))"
+    hugo = "select display_label from xref where xref_id in (select display_xref_id from gene where stable_id = %(ensembl_id)s))"
     cur.execute(hugo, {'ensembl_id':value})
     for row in cur.fetchall():
         print row[0]
