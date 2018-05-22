@@ -44,7 +44,7 @@ RUN apt-get update \
     && mv external_synonym.txt external_synonym.tsv \
     && mv gene.txt gene.tsv \
     && mv gene_attrib.txt gene_attrib.tsv \
-    && mv xref.txt xref.tsv
+    && mv xref.txt xref.tsv \
     && cat homo_sapiens_core_92_38.sql | mysql --user=root --database=hg38 \ 
     && mysqlimport --user root hg38 external_synonym.tsv \
     && mysqlimport --user root hg38 gene.tsv \
