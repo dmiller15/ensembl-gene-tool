@@ -1,6 +1,6 @@
 FROM ubuntu:artful-20171019
 
-ENV ensembl-gene-db 0.1 
+ENV ensembl-gene-db 0.2 
 
 ENV DEBIAN_FRONTEND noninteractive
 
